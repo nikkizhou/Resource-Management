@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
-import Tabel from './components/Tabel';
+import AnsattList from './components/AnsattList';
 
 function App() {
   return (
     <div className="App">
-      <Tabel/>
+      
+      <AnsattList />
+      
     </div>
   );
 }

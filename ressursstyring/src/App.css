@@ -14,3 +14,25 @@
   background-color: #283c34;
   text-align: center;
 }
+
+
+.stillingList{
+  margin-left: 50px;
+  width: 90vw;
+}
+
+.oppgaveList {
+  margin-left: 50px;
+  width: 80vw;
+  background-color: rgb(246, 240, 233);
+}
+
+
+.MuiTypography-h6 {
+  font-size: 1rem;
+  color: rgb(184, 13, 13);
+  font-weight: 900;
+  background-color: rgba(220, 225, 247, 0.826);
+  padding: 10px;
+  
+}
