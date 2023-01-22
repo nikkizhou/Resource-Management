@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import AnsattList from './components/AnsattList';
-import OppgaveList from './components/OppgaveList';
-import StillingList from './components/StillingList';
+import EmployeeList from './components/EmployeeList';
+import TaskList from './components/TaskList';
+import PositionList from './components/PositionList';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import NotFound from './components/NotFound';
 import NavBar from './components/NavBar';
@@ -13,9 +13,9 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path="/" element={<AnsattList />} />
-          <Route path="/stillinger" element={<StillingList ansattInfo={ null}  visAlt={true} />} />
-          <Route path="/oppgaver" element={<OppgaveList ansattInfo={null} stillingInfo={null} visAlt={true} />} />
+          <Route path="/" element={<EmployeeList />} />
+          <Route path="/positions" element={<PositionList employeeData={null}   showAllPositions ={true} />} />
+          <Route path="/tasks" element={<TaskList employeeData={null} positionData={null} showAllTasks={true} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

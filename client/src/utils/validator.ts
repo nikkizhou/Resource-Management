@@ -1,31 +1,31 @@
-import { Ansatt, Stilling } from "../interfaces";
+import { Employee, Position } from "../interfaces";
 import { getDatesBetweenDates } from '../utils/getDatesBetweenDates';
 
-const datoOverlapp = (datoArr: Date[], dato: Date) =>
-  datoArr.find(d => d.toDateString() === dato.toDateString());
+const dateOverlapp = (dateArr: Date[], date: Date) =>
+  dateArr.find(d => d.toDateString() === date.toDateString());
 
-export const harOverlapp = (start: Date, slutt: Date, stillinger:Stilling[]) => {
-  const datoene = stillinger.reduce(
-    (alleDatoer: any[], stilling) =>
-      alleDatoer.concat(getDatesBetweenDates(stilling.start, stilling.slutt)), []
+export const hasOverlapp = (start: Date, end: Date, positions:Position[]) => {
+  const dates = positions.reduce(
+    (allDates: any[], position) =>
+      allDates.concat(getDatesBetweenDates(position.start, position.end)), []
   )
-  const overlapp = datoOverlapp(datoene, start) || datoOverlapp(datoene, slutt)
+  const overlapp = dateOverlapp(dates, start) || dateOverlapp(dates, end)
   if (!overlapp) return false
   alert('Ansatten er ikke ledig på den valget perioden')
   return true
 }
 
 
-export const riktigPeriode = (start: Date, slutt: Date) => {
-  if (start <= slutt) return true
+export const rightPeriod = (start: Date, end: Date) => {
+  if (start <= end) return true
   alert('Slutt dato må være etter start dato')
   return false
 }
 
 
-export const harDuplikat = (inputId: string, data:Stilling[]|Ansatt[]) => {
-  const duplikat = data.find(d => d.Id === inputId)
-  if (!duplikat) return false
-  alert(`Id ${inputId} finnes i systemet allerede!`);
+export const hasDuplicate = (inputId: string, data:Position[]|Employee[]) => {
+  const duplicate = data.find(d => d.id === inputId)
+  if (!duplicate) return false
+  alert(`ID ${inputId} finnes i systemet allerede!`);
   return true
 }

@@ -1,24 +1,30 @@
-import { Ansatt, Oppgave, Stilling } from "../interfaces";
-import { harDuplikat } from '../utils/validator'
+import { Employee, Task, Position } from "../interfaces";
+import { hasDuplicate } from '../utils/validator'
+import { addEmployee, addPosition, addTask } from '../utils/requests'
 
-
-// export const addRow = (newData: Ansatt|Stilling|Oppgave, setState:Function) => {
+// export const addRow = (newData: Employee|Stilling|Task, setState:Function) => {
 //   return new Promise<void>((resolve, reject) => {
-//     setState((prev: Ansatt[] | Stilling[]) => [...prev, newData])
+//     setState((prev: Employee[] | Stilling[]) => [...prev, newData])
 //     setTimeout(() => resolve(), 300)
 //   });
 // }
 
 
-export const addRow = (newData: Oppgave | Ansatt, data: Oppgave[] | Ansatt[], setSatate: Function, otherConditions:boolean) => 
+export const addRow = (newData: any, data: Task[] | Employee[] | Position[], setSatate: Function, otherConditions:boolean) => 
   new Promise<void>((resolve, reject) => {
-    setTimeout(() => {
-      if (harDuplikat(newData.Id, data)||otherConditions) {
+    setTimeout( async () => {
+      if (hasDuplicate(newData.id, data)||otherConditions) {
         reject();
         return;
       }
       resolve();
-      setSatate((prev:Oppgave[]|Ansatt[]) => [...prev, newData])
+
+      let newItem:any = null;
+      if (newData.start) newItem = await addPosition(newData)
+      else if(newData.date) newItem = await addTask(newData)
+      else  newItem = await addEmployee(newData)
+      
+      setSatate((prev: Task[] | Employee[] | Position[]) => [...prev, newItem])
     }, 600);
   })
 

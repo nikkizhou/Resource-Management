@@ -1,15 +1,21 @@
 import axios from 'axios'
-import { Ansatt } from '../interfaces'
+import { Employee, Position } from '../interfaces'
 
 
 
 // --------------------- ansatt api -------------------------
-export const findAnsatte = async () => {
-  return await axios.get('/api/ansatte')
+export const findEmployees = async () => {
+  return await axios.get('/api/employees')
     .then(data => data.data)
     .catch(err => console.log(err.message))
-}
-
+  }
+  
+  export const addEmployee = async (emp:Employee) => {
+    return await axios.post('api/employees', emp)
+      .then((res) => res.data)
+      .catch(err => console.log(err.message))
+  }
+  
 // export const findOneAnsatt = async (id:String) => {
 //   return await axios.get(`/api/ansatte/${id}`,)
 //     .then(data => data.data)
@@ -22,16 +28,31 @@ export const findAnsatte = async () => {
 //     .catch(err => console.log(err.message))
 // }
 
-// export const addAnsatt = async (ansatt:Ansatt) => {
-//   return await axios.post('api/ansatte', ansatt)
-//     .then((orderNr) => orderNr.data)
-//     .catch(err => console.log(err.message))
-// }
 
 
 // --------------------- stilling api -------------------------
-export const findStillinger = async () => {
+export const findPositions = async () => {
   return await axios.get('/api/positions')
     .then(data => data.data)
     .catch(err => console.log(err.message))
+}
+
+
+export const findPosByEmpId = async (empId:string) => {
+  return await axios.get(`/api/positions/employee/${empId}`)
+    .then(data => data.data)
+    .catch(err => console.log(err.message))
+}
+
+export const addPosition = async (pos: Position) => {
+  return await axios.post('api/positions', pos)
+    .then((res) => res.data)
+    .catch(err => console.log(err.message))
+}
+
+
+export const addTask = async (pos: Position) => {
+  // return await axios.post('api/tasks', pos)
+  //   .then((res) => res.data)
+  //   .catch(err => console.log(err.message))
 }

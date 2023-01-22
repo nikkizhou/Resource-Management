@@ -1,21 +1,21 @@
-export interface Ansatt{
-  Id: string
-  navn:string
+export interface Employee{
+  id: string
+  name:string
 }
 
 
-export interface Stilling{
-  Id: string
-  navn: string
-  ansattId?: string
+export interface Position{
+  id: string
+  name: string
+  employeeID?: string
   start: Date
-  slutt:Date
+  end:Date
 }
 
 
-export interface Oppgave{
-  Id: string
-  navn: string
-  ansattId?: string
-  dato: Date
+export interface Task{
+  id: string
+  name: string
+  employeeID?: string
+  date: Date
 }

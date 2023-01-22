@@ -1,11 +1,11 @@
-import { Stilling } from "../interfaces";
-import DatePickerC from "../components/DatePicker";
 
 // ---------------------- ansatt --------------------
-export const ansattColumns = [
+// ---------------------------------------------------
+export const employeeColumns = [
   {
     title: "ID",
     field: "id",
+    cellStyle: { width: "40%", margin:"20px" }
   },
   {
     title: "Navn",
@@ -13,31 +13,23 @@ export const ansattColumns = [
   }
 ];
 
-export const ansattOptions = {
+export const employeeOptions = {
   search: true,
   paging: false,
   filtering: true,
   exportButton: true,
   addRowPosition: "first",
-  rowStyle: {
-    backgroundColor: "rgb(250, 250, 250)"
-  },
-  headerStyle: {
-    backgroundColor: "rgb(250, 250, 250)",
-    fontSize: 'large',
-    fontWeight: 600,
-  }
 }
 
 
 
 // ---------------------- stilling --------------------
-export const stillingColumns = 
- [
-    ...ansattColumns,
+// ----------------------------------------------------
+export const positionColumns = [
+    ...employeeColumns,
   {
     title: "AnsattID",
-    field: "ansattId",
+    field: "employeeID",
   },
   {
     title: "Start",
@@ -46,55 +38,57 @@ export const stillingColumns =
   },
   {
     title: "Slutt",
-    field: "slutt",
+    field: "end",
     type: 'date' as const,
-    dateSetting: { locale: "en-GB" }
   },
 ];
 
-export const stillingOptions = (visAlt: boolean) => {
+export const positionOptions = (showAll: boolean) => {
   return {
-  search: visAlt ? true : false,
-  paging: visAlt ? true : false,
-  filtering: visAlt ? true : false,
-  addRowPosition: "first",
-  rowStyle: {
-    backgroundColor: "rgb(253, 250, 246)"
-  },
-  headerStyle: {
-    backgroundColor: 'rgb(253, 250, 246)',
-    fontSize: 'large',
-    fontWeight: 600,
-  }
+    search: showAll ? true : false,
+    paging: showAll ? true : false,
+    filtering: showAll ? true : false,
+    addRowPosition: "first"
 }}
 
 // ---------------------- oppgave --------------------
-export const oppgaveColumns = [
-  ...ansattColumns,
+// ---------------------------------------------------
+export const taskColumns = [
+  ...employeeColumns,
   {
     title: "AnsattID",
-    field: "ansattId",
+    field: "employeeID",
   },
   {
     title: "Dato",
-    field: "dato",
+    field: "date",
     type: 'date' as const,
   }
 ];
 
-export const oppgaveOptions = (visAlt: boolean) => {
+export const taskOptions = (showAll: boolean) => {
   return{
-    search: visAlt ? true : false,
-    paging: visAlt ? true : false,
-    filtering: visAlt ? true : false,
+    search: showAll ? true : false,
+    paging: showAll ? true : false,
+    filtering: showAll ? true : false,
     addRowPosition: "first",
     rowStyle: {
       backgroundColor: "rgb(246, 235, 233)"
-    },
-    headerStyle: {
-      backgroundColor: 'rgb(246, 235, 233)',
-      fontSize: 'large',
-      fontWeight: 600,
     }
   }
 }
+
+//---------------- common actions ----------------
+
+export const actions = [
+  {
+    icon: "delete",
+    tooltip: "Delete Employee",
+    onClick: (event: any, rowData: any) => alert("You saved ")
+  },
+  {
+    icon: "edit",
+    tooltip: "Edit Employee",
+    onClick: (event: any, rowData: any) => alert("You saved ")
+  }
+]
