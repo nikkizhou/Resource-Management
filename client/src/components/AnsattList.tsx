@@ -1,20 +1,21 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import MaterialTable from "material-table";
 import StillingList from './StillingList';
 import { ansattColumns, ansattOptions } from '../utils/tabelConfigData'
 import { addRow } from '../utils/addRow';
+import { findAnsatte } from '../utils/requests';
 
 function AnsattList() {
-  const ansatteInit = [
-    { navn: "John", Id: "1", },
-    { navn: "Bren", Id: "2", },
-    { navn: "Marry", Id: "3", },
-    { navn: "Shohail", Id: "4", },
-    { navn: "Aseka", Id: "5", },
-    { navn: "Meuko", Id: "6", },
-  ];
+  const [ansatte, setAnsatte] = useState([])
+
+  useEffect(() => {
+    const fetchAnsatte = async () => {
+      const ansatte = await findAnsatte()
+      setAnsatte(ansatte)
+    }
+    fetchAnsatte()
+  }, [])
   
-  const [ansatte, setAnsatte] = useState(ansatteInit)
 
   return (
     <MaterialTable

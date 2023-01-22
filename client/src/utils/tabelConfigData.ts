@@ -5,11 +5,11 @@ import DatePickerC from "../components/DatePicker";
 export const ansattColumns = [
   {
     title: "ID",
-    field: "Id",
+    field: "id",
   },
   {
     title: "Navn",
-    field: "navn",
+    field: "name",
   }
 ];
 
