@@ -34,32 +34,29 @@ export const ansattOptions = {
 // ---------------------- stilling --------------------
 export const stillingColumns = 
  [
+    ...ansattColumns,
   {
-    title: "Id",
-    field: "Id",
-    
-  },
-  {
-    title: "Navn",
-    field: "navn",
+    title: "AnsattID",
+    field: "ansattId",
   },
   {
     title: "Start",
     field: "start",
     type: 'date' as const,
-    },
-    {
-      title: "Slutt",
-      field: "slutt",
-      type: 'date' as const,
-      dateSetting: { locale: "en-GB" }
-    },
+  },
+  {
+    title: "Slutt",
+    field: "slutt",
+    type: 'date' as const,
+    dateSetting: { locale: "en-GB" }
+  },
 ];
 
-export const stillingOptions = {
-  search: false,
-  paging: false,
-  filtering: false,
+export const stillingOptions = (visAlt: boolean) => {
+  return {
+  search: visAlt ? true : false,
+  paging: visAlt ? true : false,
+  filtering: visAlt ? true : false,
   addRowPosition: "first",
   rowStyle: {
     backgroundColor: "rgb(253, 250, 246)"
@@ -69,17 +66,14 @@ export const stillingOptions = {
     fontSize: 'large',
     fontWeight: 600,
   }
-}
+}}
 
 // ---------------------- oppgave --------------------
 export const oppgaveColumns = [
+  ...ansattColumns,
   {
-    title: "Id",
-    field: "Id",
-  },
-  {
-    title: "Navn",
-    field: "navn",
+    title: "AnsattID",
+    field: "ansattId",
   },
   {
     title: "Dato",
@@ -88,17 +82,19 @@ export const oppgaveColumns = [
   }
 ];
 
-export const oppgaveOptions = {
-  search: false,
-  paging: false,
-  filtering: false,
-  addRowPosition: "first",
-  rowStyle: {
-    backgroundColor: "rgb(246, 235, 233)"
-  },
-  headerStyle: {
-    backgroundColor: 'rgb(246, 235, 233)',
-    fontSize: 'large',
-    fontWeight: 600,
+export const oppgaveOptions = (visAlt: boolean) => {
+  return{
+    search: visAlt ? true : false,
+    paging: visAlt ? true : false,
+    filtering: visAlt ? true : false,
+    addRowPosition: "first",
+    rowStyle: {
+      backgroundColor: "rgb(246, 235, 233)"
+    },
+    headerStyle: {
+      backgroundColor: 'rgb(246, 235, 233)',
+      fontSize: 'large',
+      fontWeight: 600,
+    }
   }
 }

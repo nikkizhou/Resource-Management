@@ -29,7 +29,7 @@ function AnsattList() {
       detailPanel={[{
         render: rowData => {
           return (
-            <StillingList ansattInfo={rowData} visAlle={false} />
+            <StillingList ansattInfo={rowData} visAlt={false} />
           )
         }
       }]}

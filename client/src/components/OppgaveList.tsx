@@ -6,11 +6,12 @@ import { addRow } from '../utils/addRow';
 
 
 interface Props {
-  ansattInfo: Ansatt
-  stillingInfo: Stilling
+  ansattInfo: Ansatt|null
+  stillingInfo: Stilling|null
+  visAlt:boolean
 }
 
-function OppgaveList({ ansattInfo, stillingInfo }: Props) {
+function OppgaveList({ ansattInfo, stillingInfo, visAlt }: Props) {
   // fetch oppgaver med ansattId
   const oppgaverInit = [
     { navn: "S1", Id: "1", dato: "2023-01-21" },
@@ -19,15 +20,17 @@ function OppgaveList({ ansattInfo, stillingInfo }: Props) {
   ];
 
   const [oppgaver, setOppgaver] = useState(oppgaverInit)
+
+  const title = visAlt ? 'Oppgaver' : `Oppgavene til ${ansattInfo?.navn} (ID: ${ansattInfo?.Id}) på stillingen ${stillingInfo?.navn} (ID: ${stillingInfo?.Id}) `
   
   return (
     <div className='oppgaveList'>
       <MaterialTable
-        title={`Oppgavene til ${ansattInfo.navn} (ID: ${ansattInfo.Id}) på stillingen ${stillingInfo.navn} (ID: ${stillingInfo.Id}) `}
+        title={title}
         data={oppgaver}
         columns={oppgaveColumns}
         //@ts-ignore
-        options={oppgaveOptions}
+        options={oppgaveOptions(visAlt)}
         editable={{
           onRowAdd: newData => addRow(newData, oppgaver, setOppgaver, false)
         }}
