@@ -1,6 +1,7 @@
 package com.springboot.demo.web;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.springboot.demo.exception.AlreadyExistException;
+import com.springboot.demo.exception.NotFoundException;
 import com.springboot.demo.model.Employee;
 import com.springboot.demo.service.EmployeeService;
+
+import jakarta.validation.Valid;
 
 //1. validate request body/params, f.ks hvis id ikke finnes for update, 
 // 2. integrere med database
@@ -41,25 +46,31 @@ public class EmployeeController {
   }
 
   @GetMapping("{id}")
-  public Employee get(@PathVariable String id) {
-    Employee ansatt = ansattService.get(id);
-    if (ansatt == null)
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    return ansatt;
+  public Employee get(@PathVariable String id) throws NotFoundException {
+    //Employee employee = ansattService.get(id);
+    // System.out.println(employee+"em!!");
+    // if (employee == null) {
+    //   System.out.println("testttt!");
+    //   throw new NotFoundException("Employee not found with id:" + id);
+    // }
+      
+    Employee employee = Optional.ofNullable(ansattService.get(id))
+      .orElseThrow(() -> new NotFoundException("Employee not found with id:" + id));
+    return employee;
   }
   
   @DeleteMapping("{id}")
-  public String delete(@PathVariable String id) {
+  public String delete(@PathVariable String id) throws NotFoundException {
     return ansattService.remove(id);
   }
 
   @PostMapping(consumes={ "application/json" })
-  public Employee create(@RequestBody Employee ansatt) throws IOException {
+  public Employee create(@Valid @RequestBody Employee ansatt ) throws IOException, AlreadyExistException {
     return ansattService.save(ansatt);
   }
 
   @PutMapping(value = "{id}", consumes = { "application/json" })
-  public String update(@RequestBody Employee nyAnsatt, @PathVariable String id) {
+  public String update(@Valid @RequestBody Employee nyAnsatt, @PathVariable String id) throws NotFoundException {
     return ansattService.update(nyAnsatt,id);
   }
 }

@@ -1,22 +1,25 @@
 package com.springboot.demo.model;
 
 import org.springframework.data.annotation.Id;
-import jakarta.validation.constraints.NotEmpty;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Employee {
   
   @Id
+  @NotNull
   private String id;
-  @NotEmpty
+  @NotBlank
   private String name;
-
-  public Employee() {
-  }
-
-  public Employee(String id, String name) {
-    this.id = id;
-    this.name = name;
-  }
 
   public String getId() {
     return this.id;

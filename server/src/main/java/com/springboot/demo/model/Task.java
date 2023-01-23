@@ -4,6 +4,7 @@ import java.sql.Date;
 import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public class Task {
 
@@ -13,8 +14,8 @@ public class Task {
   private String name;
   private String employeeID;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  @NotNull
   private Date date;
- 
 
   public Task() {
   }

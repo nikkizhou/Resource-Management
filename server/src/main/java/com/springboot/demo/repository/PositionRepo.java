@@ -1,5 +1,8 @@
 package com.springboot.demo.repository;
 
+import com.springboot.demo.exception.AlreadyExistException;
+import com.springboot.demo.exception.HasOverlapExeption;
+import com.springboot.demo.exception.NotFoundException;
 import com.springboot.demo.model.Position;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +25,7 @@ public class PositionRepo {
       new Position("7", "Position 7", "3", createDate("2023-04-12"), createDate("2023-04-19"))
   ));
 
+
   private Date createDate(String dateStr) {
     return Date.valueOf(dateStr);
   }
@@ -30,7 +34,8 @@ public class PositionRepo {
     return list;
   }
 
-  public Position findById(String id) {
+  public Position findById(String id) throws NotFoundException {
+    checkNotFound(id);
     return list
         .stream()
         .filter(position -> position.getId().equals(id))
@@ -41,7 +46,26 @@ public class PositionRepo {
     return list.stream().filter(p -> p.getEmployeeID().equals(employeeId)).collect(Collectors.toList());
   }
 
-  public Position save(Position position) {
+  
+  public void deleteById(String id) throws NotFoundException {
+    checkNotFound(id);
+    list.removeIf(p -> p.getId().equals(id));
+  }
+
+  public void updateById(Position newP, String id) throws NotFoundException {
+    checkNotFound(id);
+    for (int i = 0; i < list.size(); i++) {
+      Position p = list.get(i);
+      if (p.getId().equals(id)) {
+        list.set(i, newP);
+      }
+    }
+  }
+
+
+  public Position save(Position position) throws AlreadyExistException, HasOverlapExeption {
+    checkAlreadyExist(position.getId());
+    checkOverLap(position.getEmployeeID(), position.getStart(), position.getEnd());
     Position newP = new Position();
     newP.setId(position.getId());
     newP.setName(position.getName());
@@ -52,16 +76,42 @@ public class PositionRepo {
     return newP;
   }
 
-  public void deleteById(String id) {
-    list.removeIf(p -> p.getId().equals(id));
-  }
 
-  public void updateById(Position newP, String id) {
-    for (int i = 0; i < list.size(); i++) {
-      Position p = list.get(i);
-      if (p.getId().equals(id)) {
-        list.set(i, newP);
-      }
+  public boolean hasOverlap(String employeeId, Date start, Date end) {
+    List<Position> posForOneEmp = findByEmployeeId(employeeId);
+    for (Position position : posForOneEmp) {
+      if (position.getStart().before(end) && start.before(position.getEnd()))
+        return true;
+    }
+    return false;
+  }
+  
+  public void checkOverLap(String employeeId, Date start, Date end) throws HasOverlapExeption {
+    if (hasOverlap(employeeId, start, end)) {
+      throw new HasOverlapExeption("The chosen period is not available for this employee. Please check period overlap");
     }
   }
+
+  
+  public boolean existsById(String id) {
+    for (Position position : list) {
+      if (position.getId().equals(id)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  public void checkAlreadyExist(String id) throws AlreadyExistException {
+    if (existsById(id))
+      throw new AlreadyExistException("Position with id " + id + " already exist, the id must be unique");
+  }
+
+  public void checkNotFound(String id) throws NotFoundException {
+    if (!existsById(id))
+      throw new NotFoundException("Position with id " + id + " not found");
+  }
+
+  
 }

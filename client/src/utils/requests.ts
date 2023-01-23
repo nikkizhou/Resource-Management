@@ -21,27 +21,25 @@ export const findById = async (endPoint: string, id:string) => {
 export const addOne = async (endPoint:string, reqBday: Employee|Position|Task) => {
   return await axios.post(`/api/${endPoint}`, reqBday)
     .then((res) => res.data)
-    .catch(err => console.log(err.message))
+    .catch(err => {throw err})
 }
-
 
 
 export const updateOne = async (endPoint: string, reqBday: Employee | Position | Task) => {
   return await axios.put(`/api/${endPoint}/${reqBday.id}`, reqBday)
     .then(data => data.data)
-    .catch(err => console.log(err.message))
+    .catch(err => {throw err})
 }
 
 export const deleteOne = async (endPoint: string, id: String) => {
   return await axios.delete(`/api/${endPoint}/${id}`)
     .then(data => data.data)
-    .catch(err => console.log(err.message))
+    .catch(err => {throw err})
 }
 
 
 
 // --------------------- stilling api -------------------------
-
 export const findPosByEmpId = async (empId:string) => {
   return await axios.get(`/api/positions/employee/${empId}`)
     .then(data => data.data)

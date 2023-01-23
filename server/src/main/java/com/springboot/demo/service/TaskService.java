@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springboot.demo.exception.AlreadyExistException;
+import com.springboot.demo.exception.DateOutOfRangeException;
+import com.springboot.demo.exception.NotFoundException;
 import com.springboot.demo.model.Task;
 import com.springboot.demo.repository.TaskRepo;
 
@@ -23,7 +26,7 @@ public class TaskService {
     return taskRepo.findAll();
   }
 
-  public Task get(String id) {
+  public Task get(String id) throws NotFoundException {
     return taskRepo.findById(id);
   }
 
@@ -36,16 +39,16 @@ public class TaskService {
   }
 
 
-  public String remove(String id) {
+  public String remove(String id) throws NotFoundException {
     taskRepo.deleteById(id);
     return "Tasken med id " + id + " er nå fjernet ! ";
   }
 
-  public Task save(Task Task) {
+  public Task save(Task Task) throws AlreadyExistException, DateOutOfRangeException {
     return taskRepo.save(Task);
   }
 
-  public String update(Task Task, String id) {
+  public String update(Task Task, String id) throws NotFoundException {
     taskRepo.updateById(Task, id);
     return "Tasken med id " + id + " er nå oppdatert ! ";
   }

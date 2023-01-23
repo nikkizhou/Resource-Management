@@ -13,8 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.springboot.demo.exception.AlreadyExistException;
+import com.springboot.demo.exception.HasOverlapExeption;
+import com.springboot.demo.exception.NotFoundException;
 import com.springboot.demo.model.Position;
 import com.springboot.demo.service.PositionService;
+
+import jakarta.validation.Valid;
 
 
 
@@ -36,7 +41,7 @@ public class PositionController {
   }
 
   @GetMapping("{id}")
-  public Position get(@PathVariable String id) {
+  public Position get(@PathVariable String id) throws NotFoundException {
     Position position = positionService.get(id);
     if (position == null)
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -52,17 +57,17 @@ public class PositionController {
   }
   
   @DeleteMapping("{id}")
-  public String delete(@PathVariable String id) {
+  public String delete(@PathVariable String id) throws NotFoundException {
     return positionService.remove(id);
   }
 
   @PostMapping(consumes={ "application/json" })
-  public Position create(@RequestBody Position position) throws IOException {
+  public Position create(@Valid @RequestBody Position position) throws IOException, AlreadyExistException, HasOverlapExeption {
     return positionService.save(position);
   }
 
   @PutMapping(value = "{id}", consumes = { "application/json" })
-  public String update(@RequestBody Position newP, @PathVariable String id) {
+  public String update(@Valid @RequestBody Position newP, @PathVariable String id) throws NotFoundException {
     return positionService.update(newP,id);
   }
 }
