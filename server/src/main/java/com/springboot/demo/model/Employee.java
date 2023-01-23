@@ -10,7 +10,6 @@ public class Employee {
   @NotEmpty
   private String name;
 
-
   public Employee() {
   }
 

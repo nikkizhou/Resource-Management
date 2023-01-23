@@ -1,42 +1,46 @@
 import axios from 'axios'
-import { Employee, Position } from '../interfaces'
+import { Employee, Position, Task } from '../interfaces'
 
 
+// --------------------- felles for ansatt, stilling og oppgave-------------------------
 
-// --------------------- ansatt api -------------------------
-export const findEmployees = async () => {
-  return await axios.get('/api/employees')
-    .then(data => data.data)
-    .catch(err => console.log(err.message))
-  }
-  
-  export const addEmployee = async (emp:Employee) => {
-    return await axios.post('api/employees', emp)
-      .then((res) => res.data)
-      .catch(err => console.log(err.message))
-  }
-  
-// export const findOneAnsatt = async (id:String) => {
-//   return await axios.get(`/api/ansatte/${id}`,)
-//     .then(data => data.data)
-//     .catch(err => console.log(err.message))
-// }
-
-// export const updateAnsatt = async (ansatt: Ansatt) => {
-//   return await axios.put(`/api/ansatte/${ansatt.Id}`, ansatt)
-//     .then(data => data.data)
-//     .catch(err => console.log(err.message))
-// }
-
-
-
-// --------------------- stilling api -------------------------
-export const findPositions = async () => {
-  return await axios.get('/api/positions')
+export const findAll = async (endPoint:string) => {
+  return await axios.get(`/api/${endPoint}`)
     .then(data => data.data)
     .catch(err => console.log(err.message))
 }
 
+
+export const findById = async (endPoint: string, id:string) => {
+  return await axios.get(`/api/${endPoint}/${id}`,)
+    .then(data => data.data)
+    .catch(err => console.log(err.message))
+}
+
+
+export const addOne = async (endPoint:string, reqBday: Employee|Position|Task) => {
+  return await axios.post(`/api/${endPoint}`, reqBday)
+    .then((res) => res.data)
+    .catch(err => console.log(err.message))
+}
+
+
+
+export const updateOne = async (endPoint: string, reqBday: Employee | Position | Task) => {
+  return await axios.put(`/api/${endPoint}/${reqBday.id}`, reqBday)
+    .then(data => data.data)
+    .catch(err => console.log(err.message))
+}
+
+export const deleteOne = async (endPoint: string, id: String) => {
+  return await axios.delete(`/api/${endPoint}/${id}`)
+    .then(data => data.data)
+    .catch(err => console.log(err.message))
+}
+
+
+
+// --------------------- stilling api -------------------------
 
 export const findPosByEmpId = async (empId:string) => {
   return await axios.get(`/api/positions/employee/${empId}`)
@@ -44,15 +48,12 @@ export const findPosByEmpId = async (empId:string) => {
     .catch(err => console.log(err.message))
 }
 
-export const addPosition = async (pos: Position) => {
-  return await axios.post('api/positions', pos)
-    .then((res) => res.data)
+
+// --------------------- oppgave api -------------------------
+export const findTaskByEmpIdAndPosPeriod = async (empId: string, start: Date, end: Date) => {
+  return await axios.get(`/api/tasks/employee?empId=${empId}&start=${formatDate(start)}&end=${formatDate(end)}`)
+    .then(data => data.data)
     .catch(err => console.log(err.message))
 }
 
-
-export const addTask = async (pos: Position) => {
-  // return await axios.post('api/tasks', pos)
-  //   .then((res) => res.data)
-  //   .catch(err => console.log(err.message))
-}
+export const formatDate = (date: Date) => date.toISOString().split('T')[0]

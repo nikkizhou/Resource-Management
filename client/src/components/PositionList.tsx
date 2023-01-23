@@ -2,10 +2,10 @@ import React,{useState, useEffect} from 'react'
 import { Employee, Position } from '../interfaces'
 import MaterialTable from "material-table";
 import TaskList from './TaskList';
-import { actions, positionColumns, positionOptions } from '../utils/tabelConfigData'
+import { positionColumns, positionOptions } from '../utils/tabelConfigData'
 import { hasOverlapp, rightPeriod } from '../utils/validator';
-import { addRow } from '../utils/addRow';
-import { findPositions, findPosByEmpId } from '../utils/requests';
+import { addRow, deleteRow, updateRow } from '../utils/tableRowActions';
+import { findAll, findPosByEmpId } from '../utils/requests';
 
 interface Props{
   employeeData: Employee|null,
@@ -13,14 +13,14 @@ interface Props{
 }
 
 function PositionList({ employeeData, showAllPositions }: Props) {
-  const [positions, setpositions] = useState([])
+  const [positions, setPositions] = useState([])
   
   useEffect(() => {
     const fetchPositions = async () => {
       const emps = showAllPositions
-        ? await findPositions()
+        ? await findAll('positions')
         : await findPosByEmpId(employeeData!.id)
-      setpositions(emps)
+      setPositions(emps)
     }
     fetchPositions();
   }, [])
@@ -32,38 +32,24 @@ function PositionList({ employeeData, showAllPositions }: Props) {
     <MaterialTable
       title={title}
       data={positions}
-        columns={[
+      options={positionOptions(showAllPositions)}
+      columns={[
         { title: "ID", field: "id", cellStyle: { width: "15%"}},
         { title: "Navn", field: "name", cellStyle: { width: "15%" }},
         { title: "AnsattID", field: "employeeID" },
         { title: "Start", field: "start", type: 'date' as const },
         { title: "Slutt", field: "end", type: 'date' as const },
       ]}
-        
-      actions={actions}
+      
 
-      //@ts-ignore
-      options={{
-        search: showAllPositions ? true : false,
-        paging: showAllPositions ? true : false,
-        filtering: showAllPositions ? true : false,
-        addRowPosition: "first",
-      }}
-        
       editable={{
-        onRowAdd: (newData:Position) => {
-          const otherConditions = !rightPeriod(newData.start, newData.end)
-                                  || hasOverlapp(newData.start, newData.end, positions)
-          return addRow(newData, positions, setpositions, otherConditions)
-        }
+        onRowAdd: newData => addRow('positions', newData, positions, setPositions),
+        onRowDelete: oldData => deleteRow('positions', oldData, setPositions),
+        onRowUpdate: (newData, oldData) => updateRow('positions', newData, oldData, setPositions),
       }}
         
       detailPanel={[{
-        render: rowData => {
-          return (
-            <TaskList employeeData={employeeData} positionData={rowData} showAllTasks={false} />
-          )
-        }
+        render: rowData => <TaskList employeeData={employeeData} positionData={rowData} showAllTasks={false} />
       }]}
       />
     </div>
