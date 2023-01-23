@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.springboot.demo.model.Ansatt;
-import com.springboot.demo.service.AnsattService;
+import com.springboot.demo.model.Employee;
+import com.springboot.demo.service.EmployeeService;
 
 //1. validate request body/params, f.ks hvis id ikke finnes for update, 
 // 2. integrere med database
@@ -22,27 +22,27 @@ import com.springboot.demo.service.AnsattService;
 
 //RestController enables you to get json objects from each function
 @RestController
-@RequestMapping("/api/ansatte")
-public class AnsattController {
+@RequestMapping("/api/employees")
+public class EmployeeController {
 
   // if we have @autowired here, then it does the constructor injection automatically for us.
   // @autowired enables you to inject the object dependency implicitly
-  private final AnsattService ansattService;
-  public AnsattController(AnsattService ansattService) {
+  private final EmployeeService ansattService;
+  public EmployeeController(EmployeeService ansattService) {
     this.ansattService = ansattService;
   }
 
   @GetMapping
-  public Iterable<Ansatt> get() {
-    Iterable<Ansatt> ansatte = ansattService.get();
+  public Iterable<Employee> get() {
+    Iterable<Employee> ansatte = ansattService.get();
     if (ansatte == null)
       throw new ResponseStatusException(HttpStatus.NO_CONTENT);
     return ansatte;
   }
 
   @GetMapping("{id}")
-  public Ansatt get(@PathVariable String id) {
-    Ansatt ansatt = ansattService.get(id);
+  public Employee get(@PathVariable String id) {
+    Employee ansatt = ansattService.get(id);
     if (ansatt == null)
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     return ansatt;
@@ -54,12 +54,12 @@ public class AnsattController {
   }
 
   @PostMapping(consumes={ "application/json" })
-  public Ansatt create(@RequestBody Ansatt ansatt) throws IOException {
+  public Employee create(@RequestBody Employee ansatt) throws IOException {
     return ansattService.save(ansatt);
   }
 
   @PutMapping(value = "{id}", consumes = { "application/json" })
-  public String update(@RequestBody Ansatt nyAnsatt, @PathVariable String id) {
+  public String update(@RequestBody Employee nyAnsatt, @PathVariable String id) {
     return ansattService.update(nyAnsatt,id);
   }
 }

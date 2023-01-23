@@ -3,17 +3,20 @@ package com.springboot.demo.model;
 import org.springframework.data.annotation.Id;
 import jakarta.validation.constraints.NotEmpty;
 
-public class Stilling {
+public class Employee {
   
   @Id
   private String id;
   @NotEmpty
   private String name;
 
-  private String ansattId;
 
+  public Employee() {
+  }
 
-  public Stilling() {
+  public Employee(String id, String name) {
+    this.id = id;
+    this.name = name;
   }
 
   public String getId() {
@@ -23,10 +26,6 @@ public class Stilling {
   public String getName() {
     return this.name;
   }
-  
-  public String getAnsattId() {
-    return this.ansattId;
-  }
 
   public void setId(String id) {
     this.id = id;
@@ -35,10 +34,5 @@ public class Stilling {
   public void setName(String name) {
     this.name = name;
   }
-
-  public void setAnsattId(String ansattId) {
-    this.ansattId = ansattId;
-  }
-  
 
 }
