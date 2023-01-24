@@ -36,14 +36,13 @@ Backend: **Java, Spring Boot**
 
 
 ## Future features  
-1. Multiple Date Picker for selecting period  
-2. Databese (MySQL)  
-3. Writing testing for backend  
-3. Authentication  
+1. !! Multiple Date Picker for selecting period  
+2. !! Databese (MySQL)  
+3. ?? Writing testing for backend  
+4. ?? Authentication  
+5. ?? Pictures for employees
 
 ## References:
 1. Spring boot CRUD: https://www.youtube.com/watch?v=QuvS_VLbGko
 2. Material-table: https://material-table.com/#/
-
-## API routes:
 
