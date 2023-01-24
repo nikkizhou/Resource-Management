@@ -49,7 +49,7 @@ export const findPosByEmpId = async (empId:string) => {
 
 // --------------------- oppgave api -------------------------
 export const findTaskByEmpIdAndPosPeriod = async (empId: string, start: string, end: string) => {
-  const url = `/api/tasks/employee?empId=${empId}&start=${start}&end=2025-01-28`
+  const url = `/api/tasks/employee?empId=${empId}&start=${start}&end=${end}`
   return await axios.get(encodeURI(url))
     .then(data => {
       console.log(data,'data!!');
