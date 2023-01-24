@@ -48,10 +48,12 @@ export const findPosByEmpId = async (empId:string) => {
 
 
 // --------------------- oppgave api -------------------------
-export const findTaskByEmpIdAndPosPeriod = async (empId: string, start: Date, end: Date) => {
-  return await axios.get(`/api/tasks/employee?empId=${empId}&start=${formatDate(start)}&end=${formatDate(end)}`)
-    .then(data => data.data)
+export const findTaskByEmpIdAndPosPeriod = async (empId: string, start: string, end: string) => {
+  const url = `/api/tasks/employee?empId=${empId}&start=${start}&end=2025-01-28`
+  return await axios.get(encodeURI(url))
+    .then(data => {
+      console.log(data,'data!!');
+      return data.data
+    })
     .catch(err => console.log(err.message))
 }
-
-export const formatDate = (date: Date) => date.toISOString().split('T')[0]

@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<EmployeeList />} />
           <Route path="/positions" element={<PositionList employeeData={null}   showAllPositions ={true} />} />
-          <Route path="/tasks" element={<TaskList employeeData={null} positionData={null} showAllTasks={true} />} />
+          <Route path="/tasks" element={<TaskList positionData={null} showAllTasks={true} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

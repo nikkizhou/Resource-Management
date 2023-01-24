@@ -4,8 +4,6 @@ import com.springboot.demo.exception.AlreadyExistException;
 import com.springboot.demo.exception.NotFoundException;
 import com.springboot.demo.model.Employee;
 
-import lombok.extern.java.Log;
-
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -16,11 +14,14 @@ import java.util.stream.Collectors;
 @Repository
 public class EmployeeRepo {
   private List<Employee> list = new ArrayList<Employee>(Arrays.asList(
-      new Employee("1", "Emma"),
-      new Employee("2", "Ella"),
-      new Employee("3", "Filip"),
-      new Employee("4", "Jakob"),
-      new Employee("5", "Nora")));
+      new Employee("1", "Emma J."),
+      new Employee("2", "Ella M."),
+      new Employee("3", "Filip S."),
+      new Employee("4", "Jakob K."),
+      new Employee("5", "Nora T."),
+      new Employee("6", "Tim L."),
+      new Employee("7", "Johannes F."),
+      new Employee("8", "Alex D.")));
 
   public List<Employee> findAll() {
     return list;

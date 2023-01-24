@@ -22,16 +22,18 @@ function EmployeeList() {
     <MaterialTable
       title="Ansatte"
       data={employees}
+      options={employeeOptions}
       columns={[
-        { title: "ID", field: "id"},
+        { title: "ID", field: "id", editable: 'onAdd' },
         { title: "Navn", field: "name"}
       ]}
-      options={employeeOptions}
+        
       editable={{
         onRowAdd: newData => addRow('employees', newData, employees, setEmployees),
         onRowDelete: oldData => deleteRow('employees', oldData,  setEmployees),
         onRowUpdate: (newData, oldData) => updateRow('employees', newData, oldData, setEmployees),
       }}
+        
       detailPanel={[{
         render: rowData =>  <PositionList employeeData={rowData} showAllPositions={false} />
       }]}
@@ -42,16 +44,3 @@ function EmployeeList() {
 
 export default EmployeeList
 
-
-//onRowDelete: oldData =>
-// new Promise<void>((resolve, reject) => {
-//   setTimeout(() => {
-//     const dataDelete = [...employees];
-//     const index = oldData.tableData.id;
-//     console.log(index, 'index line 39');
-
-//     dataDelete.splice(index, 1);
-//     setEmployees([...dataDelete]);
-//     resolve();
-//   }, 300);
-// })

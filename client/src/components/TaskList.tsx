@@ -7,46 +7,41 @@ import { findAll, findTaskByEmpIdAndPosPeriod } from '../utils/requests';
 
 
 interface Props {
-  employeeData: Employee |null
   positionData: Position |null
   showAllTasks:boolean
 }
 
-function TaskList({ employeeData, positionData, showAllTasks }: Props) {
-  // fetch oppgaver med ansattId
-  // const oppgaverInit = [
-  //   { name: "S1", id: "1", date: "2023-01-21" },
-  //   { name: "S2", id: "2", date: "2023-01-24" },
-  //   { name: "S3", id: "3", date: "2023-01-30" },
-  // ];
-
+function TaskList({ positionData, showAllTasks }: Props) {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const emps = showAllTasks
+      const [empid,startDate, endDate] = [positionData?.employeeID as string, positionData?.start.toString() as string, positionData?.end.toString() as string]
+      const tasksRes = showAllTasks
         ? await findAll('tasks')
-        : await findTaskByEmpIdAndPosPeriod((employeeData as Employee).id, new Date("2023-01-21"), new Date("2023-01-29"))
-      setTasks(emps)
+        : await findTaskByEmpIdAndPosPeriod(empid, startDate, endDate)
+      setTasks(tasksRes)
     }
+
     fetchTasks();
   }, [])
 
-
-
-  const title = showAllTasks ? 'Oppgaver' : `Oppgavene til ${employeeData?.name} (AnsattID: ${employeeData?.id}) på stillingen ${positionData?.name} (StillingID: ${positionData?.id}) `
+  const title = showAllTasks
+    ? 'Oppgaver'
+    : `Oppgavene til AnsattID (${positionData?.employeeID}) på stillingen ${positionData?.name} (ID: ${positionData?.id}) `
+  
   return (
     <div className='taskList'>
       <MaterialTable
         title={title}
         data={tasks}
+        options={taskOptions(showAllTasks)}
         columns={[
-          { title: "ID", field: "id" },
+          { title: "ID", field: "id", editable: 'onAdd' },
           { title: "Navn", field: "name" },
-          { title: "AnsattID", field: "employeeID" },
+          { title: "AnsattID", field: "employeeID", editable: 'onAdd' },
           { title: "Dato", field: "date", type: 'date' as const}
         ]}
-        options={taskOptions(showAllTasks)}
 
         editable={{
           onRowAdd: newData => addRow('tasks', newData, tasks, setTasks),

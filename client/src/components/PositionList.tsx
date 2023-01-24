@@ -3,7 +3,6 @@ import { Employee, Position } from '../interfaces'
 import MaterialTable from "material-table";
 import TaskList from './TaskList';
 import { positionColumns, positionOptions } from '../utils/tabelConfigData'
-import { hasOverlapp, rightPeriod } from '../utils/validator';
 import { addRow, deleteRow, updateRow } from '../utils/tableRowActions';
 import { findAll, findPosByEmpId } from '../utils/requests';
 
@@ -25,8 +24,10 @@ function PositionList({ employeeData, showAllPositions }: Props) {
     fetchPositions();
   }, [])
   
-  const title = showAllPositions ? 'positions' : `Stillingene til ${employeeData?.name} (AnsattID: ${employeeData?.id})`
-  // only pass ansattId to OppgaveList, not whole ansattIfo
+  const title = showAllPositions
+    ? 'positions'
+    : `Stillingene til ${employeeData?.name} (AnsattID: ${employeeData?.id})`
+  
   return (
     <div className='positionList'>
     <MaterialTable
@@ -34,14 +35,13 @@ function PositionList({ employeeData, showAllPositions }: Props) {
       data={positions}
       options={positionOptions(showAllPositions)}
       columns={[
-        { title: "ID", field: "id", cellStyle: { width: "15%"}},
+        { title: "ID", field: "id", cellStyle: { width: "15%" }, editable: 'onAdd' },
         { title: "Navn", field: "name", cellStyle: { width: "15%" }},
-        { title: "AnsattID", field: "employeeID" },
+        { title: "AnsattID", field: "employeeID", editable: 'onAdd' },
         { title: "Start", field: "start", type: 'date' as const },
         { title: "Slutt", field: "end", type: 'date' as const },
       ]}
       
-
       editable={{
         onRowAdd: newData => addRow('positions', newData, positions, setPositions),
         onRowDelete: oldData => deleteRow('positions', oldData, setPositions),
@@ -49,21 +49,11 @@ function PositionList({ employeeData, showAllPositions }: Props) {
       }}
         
       detailPanel={[{
-        render: rowData => <TaskList employeeData={employeeData} positionData={rowData} showAllTasks={false} />
+        render: rowData => <TaskList positionData={rowData} showAllTasks={false} />
       }]}
       />
     </div>
   )
 }
-
-// funksjoner i fremtid:
-  // responsive
-  // table style, mer brukervennlig
-  // nedtonet stillingene som har sluttet
-  // fjern anstatter, positions
-
-  // utfordringer: multiple datePicker, ting er sjult, siden lader veldig treg
-  // learing: priolitere, lage plan
-  // spørsmål: når skal det gjøres på frontend og når på backend, validator should be frontend or backend?
 
 export default PositionList

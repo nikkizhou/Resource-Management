@@ -15,20 +15,19 @@ import java.util.stream.Collectors;
 @Repository
 public class TaskRepo {
   private List<Task> list = new ArrayList<Task>(Arrays.asList(
-      new Task("1", "Task 1", "1", createDate("2023-01-28")),
-      new Task("2", "Task 2", "2", createDate(
-          "2023-02-05")),
-      new Task("2", "Task 2", "2", createDate(
-          "2023-02-13")),
-      new Task("3", "Task 3", "3", createDate(
-          "2023-02-23")),
-      new Task("4", "Task 4", "4", createDate(
-          "2023-03-10")),
-      new Task("5", "Task 5", "1", createDate(
-          "2023-04-20")),
-      new Task("6", "Task 6", "2", createDate(
-          "2023-05-02")),
-      new Task("7", "Task 7", "3", createDate("2023-05-28"))
+      new Task("1a", "Task1a", "1", createDate("2023-01-28")),
+      new Task("2a", "Task2a", "1", createDate( "2023-01-05")),
+      new Task("3e", "Task3e", "1", createDate( "2023-02-13")),
+      new Task("3f", "Task33f", "2", createDate( "2023-02-27")),
+      new Task("4a", "Task4a", "2", createDate( "2023-03-13")),
+      new Task("5s", "Task5s", "3", createDate("2023-03-17")),
+      new Task("6e", "Task6e", "3", createDate("2023-03-18")),
+      new Task("7f", "Task7f", "3", createDate("2023-03-19")),
+      new Task("8s", "Task8s", "5", createDate("2023-03-28")),
+      new Task("9e", "Task9e", "5", createDate("2023-03-27")),
+      new Task("10s", "Task10s", "6", createDate("2023-04-22")),
+      new Task("11f", "Task11f", "6", createDate("2023-04-24")),
+      new Task("12e", "Task12e", "7", createDate("2023-05-01"))
   ));
 
   private final PositionRepo positionRepo;
