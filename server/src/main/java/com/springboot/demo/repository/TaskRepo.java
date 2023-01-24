@@ -59,10 +59,22 @@ public class TaskRepo {
 
 
   public List<Task> findByEmpIdAndPosPeriod(String employeeId, Date start, Date end) {
-    return list.stream().filter(t -> t.getEmployeeID().equals(employeeId)
+    return list.stream().filter(t -> 
+      t.getEmployeeID().equals(employeeId)
       && t.getDate().after(start)
       && t.getDate().before(end))
-      .collect(Collectors.toList());
+        .collect(Collectors.toList());
+      
+    // return list.stream().filter(t -> {
+    //   System.out.println("filter: " + t.getDate());
+    //   System.out.println(t.getDate().after(start)+"after(start)");
+    //   System.out.println(t.getDate().before(end)+"before(end)");
+    //   return 
+    //     t.getEmployeeID().equals(employeeId)
+    //      && t.getDate().after(start)
+    //      && t.getDate().before(end);
+    // })
+    // .collect(Collectors.toList());
   }
 
   public Task save(Task task) throws AlreadyExistException, DateOutOfRangeException {
