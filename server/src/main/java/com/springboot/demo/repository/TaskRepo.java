@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Repository
 public class TaskRepo {
   private List<Task> list = new ArrayList<Task>(Arrays.asList(
-      new Task("1a", "Task1a", "1", createDate("2023-01-28")),
+      new Task("1a", "Task1a", "1", createDate("2023-01-25")),
       new Task("2a", "Task2a", "1", createDate( "2023-01-05")),
       new Task("3e", "Task3e", "1", createDate( "2023-02-13")),
       new Task("3f", "Task33f", "2", createDate( "2023-02-27")),
@@ -35,7 +35,6 @@ public class TaskRepo {
   public TaskRepo(PositionRepo positionRepo) {
     this.positionRepo = positionRepo;
   }
-
 
   private Date createDate(String dateStr) {
     return Date.valueOf(dateStr);
@@ -64,17 +63,6 @@ public class TaskRepo {
       && t.getDate().after(start)
       && t.getDate().before(end))
         .collect(Collectors.toList());
-      
-    // return list.stream().filter(t -> {
-    //   System.out.println("filter: " + t.getDate());
-    //   System.out.println(t.getDate().after(start)+"after(start)");
-    //   System.out.println(t.getDate().before(end)+"before(end)");
-    //   return 
-    //     t.getEmployeeID().equals(employeeId)
-    //      && t.getDate().after(start)
-    //      && t.getDate().before(end);
-    // })
-    // .collect(Collectors.toList());
   }
 
   public Task save(Task task) throws AlreadyExistException, DateOutOfRangeException {
@@ -104,15 +92,6 @@ public class TaskRepo {
     }
   }
 
-  public boolean existsById(String id) {
-    for (Task task : list) {
-      if (task.getId().equals(id)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   public boolean dateOutOfRange(String employId, Date chosenDate) {
     List<Position> positions = positionRepo.findByEmployeeId(employId);
     for (Position p : positions) {
@@ -120,6 +99,15 @@ public class TaskRepo {
         return false;
     }
     return true;
+  }
+
+  public boolean existsById(String id) {
+    for (Task task : list) {
+      if (task.getId().equals(id)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public void checkAlreadyExist(String id) throws AlreadyExistException {
@@ -135,7 +123,5 @@ public class TaskRepo {
   public void checkDateOutOfRange(String employId, Date chosenDate) throws DateOutOfRangeException {
     if (dateOutOfRange(employId, chosenDate)) 
       throw new DateOutOfRangeException("The employee has no position for this date");
-      
-    
   }
 }

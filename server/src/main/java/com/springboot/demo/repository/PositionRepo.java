@@ -21,7 +21,7 @@ public class PositionRepo {
       new Position("D3", "P3", "2", createDate("2023-02-21"), createDate("2023-02-28")),
       new Position("F4", "P4", "2", createDate("2023-03-11"), createDate("2023-03-15")),
       new Position("B5", "P5", "3", createDate("2023-03-16"), createDate("2023-03-21")),
-      new Position("B5", "P5", "3", createDate("2023-03-22"), createDate("2023-03-24")),
+      new Position("B51", "P5", "3", createDate("2023-03-22"), createDate("2023-03-24")),
       new Position("B6", "P6", "5", createDate("2023-03-25"), createDate("2023-03-29")),
       new Position("D7", "P7", "5", createDate("2023-04-12"), createDate("2023-04-19")),
       new Position("F9", "P9", "6", createDate("2023-04-21"), createDate("2023-04-25")),
