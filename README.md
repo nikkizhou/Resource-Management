@@ -1,5 +1,10 @@
 # resource-management
 
+## Quick Demo  
+https://user-images.githubusercontent.com/97601227/214528369-bb35c284-2d42-4a8a-88a6-d8d3f1dd8755.mp4
+
+
+
 ## How to start:
 1. Clone this repository.
 2. Install maven and Java JDK.
@@ -46,3 +51,7 @@ Backend: **Java, Spring Boot**
 1. Spring boot CRUD: https://www.youtube.com/watch?v=QuvS_VLbGko
 2. Material-table: https://material-table.com/#/
 
+
+## UML:
+
+![](https://github.com/nikkizhou/Resource-Management/blob/main/UML.png)
