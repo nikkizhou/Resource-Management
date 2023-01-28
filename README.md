@@ -5,9 +5,9 @@ https://user-images.githubusercontent.com/97601227/214528369-bb35c284-2d42-4a8a-
 
 
 
-## How to start:
+## How to start
 1. Clone this repository.
-2. Install maven and Java JDK.
+2. Install **npm, maven and Java JDK**.
 3. Go to server directory, run:  **mvn spring-boot:run**
 4. Go to client directory, run: **npm install**    
   after everything installed, run:  **npm run start**
@@ -20,7 +20,7 @@ This ia an app for people to assign tasks to different employees depending on th
 1. **Get, create, update and delete** employees/positions/tasks
 2. **Filter, search and sort** based on id/name/and date
 
-## Validating
+## Validation
 1. Throws **NotFoundException** when trying getById/updating/deleting an item with the id that doesn't exist in the system.  
 2. Throws **AlreadyExistException** when trying adding an item with an id that already exists in the system.  
 3. Throws **HasOverlapException** when trying adding a position to an employee with a period that's not available for the employee.  
@@ -31,14 +31,12 @@ This ia an app for people to assign tasks to different employees depending on th
 Frontend: **React, Typescript, Material-table**    
 Backend: **Java, Spring Boot**   
 
-
 ## Learnings  
 1. **Make a plan**, list everything needed to do, give them priority level according to my situation.
-2. Always **make a mvp** first before diving to more features.
+2. Always **make a mvp** first before diving into more features.
 
 ## Challenges  
-1. Material-table is a very powerful package, but in the same time, it brings som inconvience too when we need to customize som features. Ant it takes longer time to debug since many things are hidden.
-
+1. Material-table is a very powerful package, but in the same time, it brings som inconvience too when we need to customize som features. And it takes longer time to debug since many things are hidden.
 
 ## Future features  
 1. !! Multiple Date Picker for selecting period  
@@ -47,11 +45,9 @@ Backend: **Java, Spring Boot**
 4. ?? Authentication  
 5. ?? Pictures for employees
 
-## References:
+## References
 1. Spring boot CRUD: https://www.youtube.com/watch?v=QuvS_VLbGko
 2. Material-table: https://material-table.com/#/
 
-
-## UML:
-
+## UML
 ![](https://github.com/nikkizhou/Resource-Management/blob/main/UML.png)
