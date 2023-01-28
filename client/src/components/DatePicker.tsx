@@ -14,9 +14,6 @@ function DatePickerC({disabledDates, updatePeriode, value,onChange}:Props) {
   const [startDate, setStartDate] = useState<Date|null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
-  console.log(value,'value line 15');
-  
-
   const isWeekday = (date:Date) => {
     const day = date.getDay();
     return day !== 0 && day !== 6;
@@ -31,7 +28,7 @@ function DatePickerC({disabledDates, updatePeriode, value,onChange}:Props) {
   return (
     <DatePicker
       selected={startDate}
-      onChange={e => {
+      onChange={(e:any) => {
         
         onChange(startDate);
       }}

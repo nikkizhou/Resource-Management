@@ -16,8 +16,10 @@
     "axios": "^1.2.3",
     "material-table": "^1.67.0",
     "react": "^18.2.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-multi-date-picker": "^3.3.4",
+    "react-router-dom": "^6.8.0",
     "react-scripts": "5.0.1",
     "sweetalert2": "^11.7.0",
     "typescript": "^4.9.4",
@@ -46,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-datepicker": "^4.8.0"
   }
 }
