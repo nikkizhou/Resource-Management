@@ -5,7 +5,16 @@ import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Task {
 
   @Id
@@ -16,47 +25,5 @@ public class Task {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   @NotNull
   private Date date;
-
-  public Task() {
-  }
-
-  public Task(String id, String name, String empID, Date date) {
-    this.id = id;
-    this.name = name;
-    this.employeeID = empID;
-    this.date = date;
-  }
-
-  public Date getDate() {
-    return this.date;
-  }
-
-  public String getId() {
-    return this.id;
-  }
-
-  public String getName() {
-    return this.name;
-  }
-
-  public String getEmployeeID() {
-    return this.employeeID;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public void setEmployeeID(String empId) {
-    this.employeeID = empId;
-  }
-
-  public void setDate(Date start) {
-    this.date = start;
-  }
 
 }

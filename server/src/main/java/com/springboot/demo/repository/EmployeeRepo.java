@@ -23,13 +23,16 @@ public class EmployeeRepo {
       new Employee("7", "Johannes F."),
       new Employee("8", "Alex D.")));
 
+  private Validator validator = new Validator(list, "Employee");
+
   public List<Employee> findAll() {
     return list;
   }
 
   public Employee findById(String id) throws NotFoundException {
-    checkNotFound(id);
-    return list.stream().filter(employee -> employee.getId().equals(id)).findFirst().get(); 
+    validator.setId(id);
+    validator.checkNotFound();
+    return list.stream().filter(employee -> employee.getId().equals(id)).findFirst().get();
   }
 
   public List<Employee> search(String name) {
@@ -37,7 +40,8 @@ public class EmployeeRepo {
   }
 
   public Employee save(Employee employee) throws AlreadyExistException {
-    checkAlreadyExist(employee.getId());
+    validator.setId(employee.getId());
+    validator.checkAlreadyExist();
     Employee nyEmployee = new Employee();
     nyEmployee.setId(employee.getId());
     nyEmployee.setName(employee.getName());
@@ -46,36 +50,19 @@ public class EmployeeRepo {
   }
 
   public void deleteById(String id) throws NotFoundException {
-    checkNotFound(id);
+    validator.setId(id);
+    validator.checkNotFound();
     list.removeIf(x -> x.getId().equals(id));
   }
 
   public void updateById(Employee nyEmployee, String id) throws NotFoundException {
-    checkNotFound(id);
+    validator.setId(id);
+    validator.checkNotFound();
     for (int i = 0; i < list.size(); i++) {
       Employee a = list.get(i);
       if (a.getId().equals(id)) {
         list.set(i, nyEmployee);
       }
     }
-  }
-
-  public boolean existsById(String id) {
-    for (Employee employee : list) {
-      if (employee.getId().equals(id)) {
-        return true;
-      }
-    }
-    return false;
-  }
-  
-  public void checkAlreadyExist(String id) throws AlreadyExistException {
-    if (existsById(id))
-      throw new AlreadyExistException("Employee with id " + id + " already exist, the id must be unique");
-  }
-  
-  public void checkNotFound(String id) throws NotFoundException {
-    if (!existsById(id))
-      throw new NotFoundException("Employee with id " + id + " not found");
   }
 }

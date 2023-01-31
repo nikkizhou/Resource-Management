@@ -31,6 +31,7 @@ public class TaskRepo {
   ));
 
   private final PositionRepo positionRepo;
+  private Validator validator = new Validator(list, "Task");
 
   public TaskRepo(PositionRepo positionRepo) {
     this.positionRepo = positionRepo;
@@ -45,7 +46,8 @@ public class TaskRepo {
   }
 
   public Task findById(String id) throws NotFoundException {
-    checkNotFound(id);
+    validator.setId(id);
+    validator.checkNotFound();
     return list
       .stream()
       .filter(t -> t.getId().equals(id))
@@ -66,62 +68,35 @@ public class TaskRepo {
   }
 
   public Task save(Task task) throws AlreadyExistException, DateOutOfRangeException {
-    checkAlreadyExist(task.getId());
-    checkDateOutOfRange(task.getEmployeeID(),task.getDate());
+    validator.setId(task.getId());
+    validator.checkAlreadyExist();
+    String employeeId = task.getEmployeeID();
+    List<Position> posForOneEmp = positionRepo.findByEmployeeId(employeeId);
+    validator.checkDateOutOfRange(employeeId, task.getDate(), posForOneEmp);
+    
     Task newP = new Task();
     newP.setId(task.getId());
     newP.setName(task.getName());
-    newP.setEmployeeID(task.getEmployeeID());
+    newP.setEmployeeID(employeeId);
     newP.setDate(task.getDate());
     list.add(newP);
     return newP;
   }
 
   public void deleteById(String id) throws NotFoundException {
-    checkNotFound(id);
+    validator.setId(id);
+    validator.checkNotFound();
     list.removeIf(p -> p.getId().equals(id));
   }
 
   public void updateById(Task newP, String id) throws NotFoundException {
-    checkNotFound(id);
+   validator.setId(id);
+    validator.checkNotFound();
     for (int i = 0; i < list.size(); i++) {
       Task p = list.get(i);
       if (p.getId().equals(id)) {
         list.set(i, newP);
       }
     }
-  }
-
-  public boolean dateOutOfRange(String employId, Date chosenDate) {
-    List<Position> positions = positionRepo.findByEmployeeId(employId);
-    for (Position p : positions) {
-      if (chosenDate.after(p.getStart()) && chosenDate.before(p.getEnd()))
-        return false;
-    }
-    return true;
-  }
-
-  public boolean existsById(String id) {
-    for (Task task : list) {
-      if (task.getId().equals(id)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public void checkAlreadyExist(String id) throws AlreadyExistException {
-    if (existsById(id))
-      throw new AlreadyExistException("Task with id " + id + " already exist, the id must be unique");
-  }
-
-  public void checkNotFound(String id) throws NotFoundException {
-    if (!existsById(id))
-      throw new NotFoundException("Task with id " + id + " not found");
-  }
-
-  public void checkDateOutOfRange(String employId, Date chosenDate) throws DateOutOfRangeException {
-    if (dateOutOfRange(employId, chosenDate)) 
-      throw new DateOutOfRangeException("The employee has no position for this date");
   }
 }
