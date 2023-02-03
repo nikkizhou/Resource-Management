@@ -1,12 +1,12 @@
 version: '3'
 services:
   resource-backend:
-    image: "resource_api:0.0.1"
+    image: "resource_api:0.0.4"
     environment:
       - SPRING.PROFILES.ACTIVE=default, in-memory
 
   resource-frontend:
-    image: "resource_ui:0.0.4"
+    image: "resource_ui:0.0.5"
     ports:
       - "3000:3000"
       
