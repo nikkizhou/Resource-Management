@@ -6,9 +6,10 @@ https://user-images.githubusercontent.com/97601227/214528369-bb35c284-2d42-4a8a-
 
 
 ## How to start
-1. Clone this repository.
-2. Install **docker**.
-3. In root directory, run <code>docker compose up</code>.
+1. Clone this repository  
+2. Install **docker**  
+3. In root directory, run <code>docker compose up</code>  
+4. Go to http://localhost:3000
   
 
 ## Motivation
